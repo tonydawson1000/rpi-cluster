@@ -4,7 +4,7 @@
 
   tasks:
   - name: Ensure chrony (for time sync) is installed.
-    yum:
+    ansible.builtin.package:
       name: chrony
       state: present
 
