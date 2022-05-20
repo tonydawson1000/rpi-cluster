@@ -9,7 +9,7 @@
       state: present
 
   - name: Ensure chrony is running.
-    service:
+    ansible.builtin.service:
       name: chronyd
       state: started
       enabled: yes
