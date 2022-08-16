@@ -1,0 +1,10 @@
+---
+
+- hosts: cluster
+  become: yes
+
+  tasks:
+  - name: Disable swap.
+    include_tasks: "{{ playbook_dir }}/01-package-installation/playbook-disable-swap.yml"
+
+...
