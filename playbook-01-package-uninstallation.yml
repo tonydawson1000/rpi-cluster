@@ -1,0 +1,16 @@
+---
+
+- hosts: cluster
+  become: yes
+
+  tasks:
+  - name: Enable swap.
+    include_tasks: "{{ playbook_dir }}/kubernetes/01-package-installation/swap/playbook-enable-swap.yml"
+
+  - name: Ensure containerd is removed.
+    include_tasks: "{{ playbook_dir }}/kubernetes/01-package-installation/containerd/playbook-disable-containerd.yml"
+
+  - name: Ensure kubernetes is removed.
+    include_tasks: "{{ playbook_dir }}/kubernetes/01-package-installation/kubernetes/playbook-disable-kubernetes.yml"
+
+...

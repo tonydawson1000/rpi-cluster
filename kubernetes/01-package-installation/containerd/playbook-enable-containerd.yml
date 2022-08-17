@@ -1,0 +1,50 @@
+---
+
+- name: Ensure containerd prereqs are installed and configured to load on boot.
+  community.general.modprobe:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - overlay
+    - br_netfilter
+
+- name: Ensure containerd.conf exists.
+  ansible.builtin.copy:
+    content: |
+      overlay
+      br_netfilter
+    dest: /etc/modules-load.d/containerd.conf
+
+- name: Ensure containerd sysctl params exists.
+  ansible.builtin.copy:
+    content: |
+      net.bridge.bridge-nf-call-iptables  = 1
+      net.ipv4.ip_forward                 = 1
+      net.bridge.bridge-nf-call-ip6tables = 1
+    dest: /etc/sysctl.d/99-kubernetes-cri.conf
+  register: result
+
+- name: Ensure sysctl param changes are applied.
+  shell: sysctl -p --system
+  when: result.changed
+
+- name: Update and Upgrade apt packages.
+  ansible.builtin.apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 86400 # 1 Day
+
+- name: Ensure containerd is installed.
+  ansible.builtin.apt:
+    name: containerd
+    state: present
+
+- name: Create containerd configuration file.
+  shell: containerd config default | tee /etc/containerd/config.toml
+
+- name: Restart containerd service.
+  ansible.builtin.service:
+    name: containerd
+    state: restarted
+
+...

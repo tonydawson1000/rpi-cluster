@@ -1,0 +1,33 @@
+---
+
+- name: Allow 'hold' packages to be removed (kubeadm, kubelet and kubectl).
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: install
+  loop:
+    - kubelet
+    - kubeadm
+    - kubectl
+    - containerd
+
+- name: Ensure Googles apt repository is removed
+  ansible.builtin.apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: absent
+
+- name: Ensure kubernetes repository is unavailable
+  ansible.builtin.apt_repository:
+    repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
+    state: absent
+    filename: kubernetes
+
+- name: Ensure the Kubernetes packages are uninstalled (kubeadm, kubelet and kubectl).
+  ansible.builtin.apt:
+    update_cache: yes
+    pkg:
+      - kubelet=1.23.4-00
+      - kubeadm=1.23.4-00
+      - kubectl=1.23.4-00
+    state: absent
+
+...

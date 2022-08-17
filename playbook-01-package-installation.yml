@@ -1,0 +1,18 @@
+---
+
+# https://kubernetes.io/docs/setup/production-environment/container-runtimes/#install-and-configure-prerequisites
+
+- hosts: cluster
+  become: yes
+
+  tasks:
+  - name: Disable swap.
+    include_tasks: "{{ playbook_dir }}/kubernetes/01-package-installation/swap/playbook-disable-swap.yml"
+
+  - name: Ensure containerd is installed.
+    include_tasks: "{{ playbook_dir }}/kubernetes/01-package-installation/containerd/playbook-enable-containerd.yml"
+
+  - name: Ensure kubernetes is installed.
+    include_tasks: "{{ playbook_dir }}/kubernetes/01-package-installation/kubernetes/playbook-enable-kubernetes.yml"
+
+...
