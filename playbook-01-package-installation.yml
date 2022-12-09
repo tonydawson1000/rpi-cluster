@@ -2,7 +2,7 @@
 
 # https://kubernetes.io/docs/setup/production-environment/container-runtimes/#install-and-configure-prerequisites
 
-- hosts: cluster
+- hosts: all
   become: yes
 
   tasks:

@@ -31,5 +31,16 @@ Credits : [This pluralsight course](https://app.pluralsight.com/library/courses/
 
 ---
 
+## Ansible Galaxy - Prereq's
+#### - `ansible-galaxy collection list`
+
+#### - `ansible-galaxy collection install community.general` 
+#### --- [community.general.modprobe](https://docs.ansible.com/ansible/latest/collections/community/general/modprobe_module.html)
+---
+
+
 ## Install Kubernetes
-#### - `ansible-playbook playbook-install-and-run-chrony.yml -K`
+#### - `ansible-playbook playbook-01-package-installation.yml -i <host-file.ini> -K`
+
+## Initialise the Cluster - Run Manually on Control Plane Node
+### - `sudo kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.23.4`

@@ -1,5 +1,15 @@
 ---
 
+- name: Allow 'hold' packages to be removed (kubeadm, kubelet and kubectl).
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: install
+  loop:
+    - kubelet
+    - kubeadm
+    - kubectl
+    - containerd
+
 - name: Ensure containerd is uninstalled.
   ansible.builtin.apt:
     name: containerd
