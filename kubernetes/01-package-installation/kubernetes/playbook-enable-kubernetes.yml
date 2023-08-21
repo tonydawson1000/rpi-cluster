@@ -1,27 +1,27 @@
 ---
 
-- name: Update and Upgrade apt packages.
-  ansible.builtin.apt:
-    upgrade: yes
-    update_cache: yes
-    cache_valid_time: 86400 # 1 Day
+# - name: Update and Upgrade apt packages.
+#   ansible.builtin.apt:
+#     upgrade: yes
+#     update_cache: yes
+#     cache_valid_time: 86400 # 1 Day
 
-- name: Ensure apt-transport-https is installed.
-  ansible.builtin.apt:
-    name: apt-transport-https
-    state: present
+# - name: Ensure apt-transport-https is installed.
+#   ansible.builtin.apt:
+#     name: apt-transport-https
+#     state: present
 
-- name: Ensure curl is installed.
-  ansible.builtin.apt:
-    name: curl
-    state: present
+# - name: Ensure curl is installed.
+#   ansible.builtin.apt:
+#     name: curl
+#     state: present
 
 - name: Ensure Googles apt repository is enabled
   ansible.builtin.apt_key:
     url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: present
 
-- name: Ensure kubernetes repository is available
+- name: Ensure Kubernetes repository is available
   ansible.builtin.apt_repository:
     repo: deb https://apt.kubernetes.io/ kubernetes-xenial main
     state: present
@@ -37,12 +37,12 @@
   ansible.builtin.apt:
     update_cache: yes
     pkg:
-      - kubelet=1.23.4-00
-      - kubeadm=1.23.4-00
-      - kubectl=1.23.4-00
+      - kubelet=1.26.0-00
+      - kubeadm=1.26.0-00
+      - kubectl=1.26.0-00
     state: present
 
-- name: Prevent packages from being automagically upgraded (kubeadm, kubelet and kubectl) - Mark as Hold at v1.23.4-00.
+- name: Prevent packages from being automagically upgraded (kubeadm, kubelet and kubectl)
   dpkg_selections:
     name: "{{ item }}"
     selection: hold
@@ -50,15 +50,13 @@
     - kubelet
     - kubeadm
     - kubectl
-    - containerd
 
-- name: Ensure the kubelet and containerd services have restarted and set to start on boot.
+- name: Ensure the kubelet service have restarted and set to start on boot.
   ansible.builtin.service:
     name: "{{ item }}"
     state: restarted
     enabled: yes
   loop:
     - kubelet
-    - containerd
 
 ...

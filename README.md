@@ -38,6 +38,8 @@ Credits : [This pluralsight course](https://app.pluralsight.com/library/courses/
 #### --- [community.general.modprobe](https://docs.ansible.com/ansible/latest/collections/community/general/modprobe_module.html)
 ---
 
+## To target an 'Ansible Group' (e.g. cps)
+#### - `ansible-playbook playbook-01-package-installation.yml --limit cps`
 
 ## Install Kubernetes
 #### - `ansible-playbook playbook-01-package-installation.yml -i <host-file.ini> -K`

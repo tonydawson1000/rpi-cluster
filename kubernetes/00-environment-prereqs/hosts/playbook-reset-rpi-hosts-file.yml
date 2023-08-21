@@ -1,0 +1,13 @@
+---
+
+- name: Copy (revert) RPi 'hosts' file to original
+  ansible.builtin.copy:
+    src: ../../../files/hosts-original
+    dest: /etc/cloud/templates/hosts.debian.tmpl
+
+- name: Restart network service
+  ansible.builtin.service:
+    name: systemd-networkd
+    state: restarted
+
+...

@@ -15,7 +15,7 @@
       br_netfilter
     dest: /etc/modules-load.d/containerd.conf
 
-- name: Ensure containerd sysctl params exists.
+- name: Ensure containerd sysctl params file exists.
   ansible.builtin.copy:
     content: |
       net.bridge.bridge-nf-call-iptables  = 1
@@ -39,18 +39,30 @@
     name: containerd
     state: present
 
-- name: Create containerd configuration folder.
+- name: Prevent packages from being automagically upgraded (containerd)
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  loop:
+    - containerd
+
+- name: Ensure containerd configuration folder exists.
   ansible.builtin.file:
     path: /etc/containerd
     state: directory
-    mode: '0755'
 
 - name: Create containerd configuration file.
   shell: containerd config default | tee /etc/containerd/config.toml
 
-- name: Restart containerd service.
+- name: Ensure containerd config is updated (SystemdCgroup)
+  shell: sudo sed -i 's/            SystemdCgroup = false/            SystemdCgroup = true/' /etc/containerd/config.toml
+
+- name: Ensure the containerd services have restarted and set to start on boot.
   ansible.builtin.service:
-    name: containerd
+    name: "{{ item }}"
     state: restarted
+    enabled: yes
+  loop:
+    - containerd
 
 ...

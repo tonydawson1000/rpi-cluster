@@ -1,13 +1,10 @@
 ---
 
-- name: Allow 'hold' packages to be removed (kubeadm, kubelet and kubectl).
+- name: Allow 'hold' packages to be removed (containerd).
   dpkg_selections:
     name: "{{ item }}"
     selection: install
   loop:
-    - kubelet
-    - kubeadm
-    - kubectl
     - containerd
 
 - name: Ensure containerd is uninstalled.
@@ -18,6 +15,11 @@
 - name: Ensure containerd config file does not exist.
   ansible.builtin.file:
     path: /etc/containerd/config.toml
+    state: absent
+
+- name: Ensure containerd configuration folder doesnt exist.
+  ansible.builtin.file:
+    path: /etc/containerd
     state: absent
 
 - name: Ensure containerd prereqs are removed.

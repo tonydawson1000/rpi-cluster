@@ -8,11 +8,14 @@
     - kubelet
     - kubeadm
     - kubectl
-    - containerd
 
-- name: Ensure Googles apt repository is removed
-  ansible.builtin.apt_key:
-    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+- name: Ensure the Kubernetes packages are uninstalled (kubeadm, kubelet and kubectl).
+  ansible.builtin.apt:
+    update_cache: yes
+    pkg:
+      - kubelet=1.26.0-00
+      - kubeadm=1.26.0-00
+      - kubectl=1.26.0-00
     state: absent
 
 - name: Ensure kubernetes repository is unavailable
@@ -21,13 +24,9 @@
     state: absent
     filename: kubernetes
 
-- name: Ensure the Kubernetes packages are uninstalled (kubeadm, kubelet and kubectl).
-  ansible.builtin.apt:
-    update_cache: yes
-    pkg:
-      - kubelet=1.23.4-00
-      - kubeadm=1.23.4-00
-      - kubectl=1.23.4-00
+- name: Ensure Googles apt repository is removed
+  ansible.builtin.apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
     state: absent
 
 ...
