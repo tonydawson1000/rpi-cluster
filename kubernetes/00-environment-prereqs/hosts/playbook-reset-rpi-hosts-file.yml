@@ -2,7 +2,7 @@
 
 - name: Copy (revert) RPi 'hosts' file to original
   ansible.builtin.copy:
-    src: ../../../files/hosts-original
+    src: ../../../files/ubuntu-rpi/hosts-original
     dest: /etc/cloud/templates/hosts.debian.tmpl
 
 - name: Restart network service

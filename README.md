@@ -5,6 +5,11 @@ Will work on Ubuntu 22.4
 
 Credits : [This pluralsight course](https://app.pluralsight.com/library/courses/kubernetes-installation-configuration-fundamentals/table-of-contents) 
 
+
+---
+# To Install - see [Install.md](Install.md)
+---
+
 --- 
 ## Initial connectivity to Host(s) check
 
@@ -40,9 +45,3 @@ Credits : [This pluralsight course](https://app.pluralsight.com/library/courses/
 
 ## To target an 'Ansible Group' (e.g. cps)
 #### - `ansible-playbook playbook-01-package-installation.yml --limit cps`
-
-## Install Kubernetes
-#### - `ansible-playbook playbook-01-package-installation.yml -i <host-file.ini> -K`
-
-## Initialise the Cluster - Run Manually on Control Plane Node
-### - `sudo kubeadm init --pod-network-cidr 192.168.0.0/16 --kubernetes-version 1.23.4`

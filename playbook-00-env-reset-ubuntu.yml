@@ -1,0 +1,10 @@
+---
+
+- hosts: all
+  become: yes
+
+  tasks:
+  - name: Ensure RPI HOSTS file is reset to Default.
+    include_tasks: "{{ playbook_dir }}/kubernetes/00-environment-prereqs/hosts/playbook-reset-ubuntu-hosts-file.yml"
+
+...

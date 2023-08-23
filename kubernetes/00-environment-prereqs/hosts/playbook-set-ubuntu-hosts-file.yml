@@ -2,8 +2,8 @@
 
 - name: Copy new RPi 'hosts' file
   ansible.builtin.copy:
-    src: ../../../files/ubuntu-rpi/hosts-new
-    dest: /etc/cloud/templates/hosts.debian.tmpl
+    src: ../../../files/ubuntu22.04/hosts-new
+    dest: /etc/hosts
 
 - name: Restart network service
   ansible.builtin.service:
