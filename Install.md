@@ -48,4 +48,7 @@
 1) - Get a list of our current nodes, just the Control Plane Node Node...should be Ready.
      - `kubectl get nodes`
 
-     
+### Setup [Bash AutoComplete](https://kubernetes.io/docs/reference/kubectl/cheatsheet/#kubectl-autocomplete)
+- `sudo apt-get install -y bash-completion`
+- `echo "source <(kubectl completion bash)" >> ~/.bashrc`
+- `source ~/.bashrc`
